@@ -1,4 +1,4 @@
-# Swift Implementation for Solving Spherical Triangles (SwiftySphTriangleSolns)
+# Swift Implementation for Solving Spherical Triangles
 
 Vertices and angles at the vertices are denoted by the same upper-case letters **A**, **B** anc **C**.  The sum of the angles is  ![π < A+B+C < 3π](https://latex.codecogs.com/png.image?\dpi{100}\inline\pi<A&plus;B&plus;C<3\pi)
 
@@ -63,7 +63,7 @@ The sides and angles in the calling function are determined using the option enu
 
 ``` swift
 dependencies: [
-    .package(url: "https://github.com/firecrestHorizon/SwiftySphTriangleSolns.git", from: "0.1.0"),
+    .package(url: "https://github.com/firecrestHorizon/SwiftySphericalTriangle.git", from: "0.1.0"),
 ],
 ```
 

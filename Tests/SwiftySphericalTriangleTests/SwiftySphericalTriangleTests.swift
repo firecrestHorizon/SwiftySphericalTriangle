@@ -3,7 +3,7 @@
     
     // Approx Earth radius in meters
     let Earth_R = 6400000.0
-
+    
     // Length of sides for a triangle, in m
     let side_a = 10.0e+3                  // 10km
     let side_b = 15.0e+3                  // 15km
@@ -11,16 +11,16 @@
     let a = side_a / Earth_R
     let b = side_b / Earth_R
     let c = side_c / Earth_R
-
+    
     // Angles for the same triangle, in radians
     let angle_A = 0.7169006006312598      // 41.075378747°
     let angle_B = 1.400747719572694       // 80.256932494°
     let angle_C = 1.0239458974317932      // 58.667778373°
     
     let reqAccuracyAngle        = 1e-7
-
+    
     final class SwiftySphericalTriangleTests: XCTestCase {
-            func checkTriangle(triangle st: SphericalTriangle) -> Bool {
+      func checkTriangle(triangle st: SphericalTriangle) -> Bool {
         var check = true
         if abs(st.A.distance(to: angle_A)) > reqAccuracyAngle {  check = false }
         if abs(st.B.distance(to: angle_B)) > reqAccuracyAngle {  check = false }
@@ -28,7 +28,7 @@
         if abs(st.a.distance(to: side_a/Earth_R)) > reqAccuracyAngle {  check = false }
         if abs(st.b.distance(to: side_b/Earth_R)) > reqAccuracyAngle {  check = false }
         if abs(st.c.distance(to: side_c/Earth_R)) > reqAccuracyAngle {  check = false }
-
+        
         if !check {
           let s = """
            Calculated Angle A: \(st.A)
@@ -50,7 +50,7 @@
         
         return check
       }
-
+      
       func testSSS() {
         let st = sphericalTriangle_SSS(side1: side_a, side2: side_b, side3: side_c, R: Earth_R)
         XCTAssertTrue(checkTriangle(triangle: st))
@@ -60,7 +60,7 @@
         let st = sphericalTriangle_AAA(vertex1: angle_A, vertex2: angle_B, vertex3: angle_C, R: Earth_R)
         XCTAssertTrue(checkTriangle(triangle: st))
       }
-
+      
       func testSAS() {
         var st = sphericalTriangle_SAS(side2: side_a, vertex1: angle_C, side3: side_b, R: Earth_R, SAS: .aCb)
         XCTAssertTrue(checkTriangle(triangle: st))
@@ -105,4 +105,5 @@
         st = sphericalTriangle_SSAA(side1: side_c, side2: side_a, vertex1: angle_C, vertex2: angle_A, R: Earth_R, SSAA: .caCA)
         XCTAssertTrue(checkTriangle(triangle: st))
       }
+      
     }

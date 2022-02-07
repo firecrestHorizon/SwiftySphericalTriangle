@@ -51,9 +51,13 @@ public func sphericalTriangle_SSS(side1: Double, side2: Double, side3: Double, R
 public func sphericalTriangle_AAA(vertex1: Double, vertex2: Double, vertex3: Double, R: Double = 1.0) -> SphericalTriangle {
   let A = vertex1; let B = vertex2; let C = vertex3
     
-  let a = acos( (cos(A) + cos(B) * cos(C)) / (sin(B) * sin(C)) )
-  let b = acos( (cos(B) + cos(A) * cos(C)) / (sin(A) * sin(C)) )
-  let c = acos( (cos(C) + cos(A) * cos(B)) / (sin(A) * sin(B)) )
+  var a = acos( (cos(A) + cos(B) * cos(C)) / (sin(B) * sin(C)) )
+  var b = acos( (cos(B) + cos(A) * cos(C)) / (sin(A) * sin(C)) )
+  var c = acos( (cos(C) + cos(A) * cos(B)) / (sin(A) * sin(B)) )
+
+  if a.isNaN { a = 1.0e-15 }
+  if b.isNaN { b = 1.0e-15 }
+  if c.isNaN { c = 1.0e-15 }
 
   return SphericalTriangle(A: A, B: B, C: C, a: a, b: b, c: c, R: R)
 }

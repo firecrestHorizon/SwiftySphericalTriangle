@@ -114,8 +114,8 @@ public func sphericalTriangle_SSA(side1: Double, side2: Double, vertex1 v1: Doub
   let s1 = side1 / R
   let s2 = side2 / R
   
-  // Only a solution when v1 > asin( sin(s1) * sin(s2) )
-  let chk = v1 - asin( sin(s1) * sin(s2) )
+  // Only a solution when s1 > asin( sin(s2) * sin(v1) )
+  let chk = s1 - asin( sin(s2) * sin(v1) )
     
   // If no solution, return count=0 and empty triangle array
   if chk < 0 {

@@ -17,7 +17,7 @@
     let angle_B = 1.400747719572694       // 80.256932494°
     let angle_C = 1.0239458974317932      // 58.667778373°
     
-    let reqAccuracyAngle        = 1e-7
+    let reqAccuracyAngle        = 1e-4
     
     final class SwiftySphericalTriangleTests: XCTestCase {
       func checkTriangle(triangle st: SphericalTriangle) -> Bool {
@@ -72,11 +72,11 @@
       
       func testSSA() {
         var st = sphericalTriangle_SSA(side1: side_a, side2: side_b, vertex1: angle_A, R: Earth_R, SSA: .abA)
-        XCTAssertTrue(checkTriangle(triangle: st))
+        XCTAssertTrue(checkTriangle(triangle: st.st[0]))
         st = sphericalTriangle_SSA(side1: side_b, side2: side_c, vertex1: angle_B, R: Earth_R, SSA: .bcB)
-        XCTAssertTrue(checkTriangle(triangle: st))
+        XCTAssertTrue(checkTriangle(triangle: st.st[0]))
         st = sphericalTriangle_SSA(side1: side_c, side2: side_a, vertex1: angle_C, R: Earth_R, SSA: .caC)
-        XCTAssertTrue(checkTriangle(triangle: st))
+        XCTAssertTrue(checkTriangle(triangle: st.st[0]))
       }
       
       func testASA() {

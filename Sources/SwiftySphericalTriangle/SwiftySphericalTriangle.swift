@@ -108,20 +108,50 @@ public enum optionSSA {
  - Parameter SSA: enum stating which sides and angle are provided (abA, bcB, caC)
  - Parameter R: radius of sphere.  R=1 will use a unitary sphere
  */
-public func sphericalTriangle_SSA(side1: Double, side2: Double, vertex1 v1: Double, R: Double = 1.0, SSA: optionSSA) -> SphericalTriangle {
+public func sphericalTriangle_SSA(side1: Double, side2: Double, vertex1 v1: Double, R: Double = 1.0, SSA: optionSSA) -> (count: Int, st: [SphericalTriangle]) {
+  var st = [SphericalTriangle]()
+  var count = 0
   let s1 = side1 / R
   let s2 = side2 / R
   
+  // Only a solution when v1 > asin( sin(s1) * sin(s2) )
+  let chk = v1 - asin( sin(s1) * sin(s2) )
+    
+  // If no solution, return count=0 and empty triangle array
+  if chk < 0 {
+    return (count, st)
+  }
+  
+  // Calculate the first (default) v2 angle
   let v2 = asin( sin(v1) * sin(s2) / sin(s1) )
   
+  // Calculate the spherical triangle
+  // If v1 == asin( sin(s1) * sin(s2) ), i.e. chk == 0
+  //  then there is only one solution so skip calculating the 2nd triangle
   switch SSA {
   case .abA:
-    return sphericalTriangle_SSAA(side1: side1, side2: side2, vertex1: v1, vertex2: v2, R: R, SSAA: .abAB)
+    count += 1
+    st.append(sphericalTriangle_SSAA(side1: side1, side2: side2, vertex1: v1, vertex2: v2, R: R, SSAA: .abAB))
+    if chk > 0 {
+      count += 1
+      st.append(sphericalTriangle_SSAA(side1: side1, side2: side2, vertex1: v1, vertex2: .pi - v2, R: R, SSAA: .abAB))
+    }
   case .bcB:
-    return sphericalTriangle_SSAA(side1: side1, side2: side2, vertex1: v1, vertex2: v2, R: R, SSAA: .bcBC)
+    count += 1
+    st.append(sphericalTriangle_SSAA(side1: side1, side2: side2, vertex1: v1, vertex2: v2, R: R, SSAA: .bcBC))
+    if chk > 0 {
+      count += 1
+      st.append(sphericalTriangle_SSAA(side1: side1, side2: side2, vertex1: v1, vertex2: .pi - v2, R: R, SSAA: .bcBC))
+    }
   case .caC:
-    return sphericalTriangle_SSAA(side1: side1, side2: side2, vertex1: v1, vertex2: v2, R: R, SSAA: .caCA)
+    count += 1
+    st.append(sphericalTriangle_SSAA(side1: side1, side2: side2, vertex1: v1, vertex2: v2, R: R, SSAA: .caCA))
+    if chk > 0 {
+      count += 1
+      st.append(sphericalTriangle_SSAA(side1: side1, side2: side2, vertex1: v1, vertex2: .pi - v2, R: R, SSAA: .caCA))
+    }
   }
+  return (count, st)
 }
 
 public enum optionASA {

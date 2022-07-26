@@ -11,12 +11,12 @@ public struct SphericalTriangle {
   public var c: Double
   public var c_dist: Double { get { return c * R } }
   public var R: Double = 1.0
-  public func describe() {
-    print("""
+  public func describe() -> String {
+    return """
           A: \(String(format: "%.9f°", locale: Locale(identifier: "en"), 180*A/Double.pi))   a: \(String(format: "%.9f", locale: Locale(identifier: "en"), a))   dist: \(String(format: "%12.3f", locale: Locale(identifier: "en"), a_dist))
           B: \(String(format: "%.9f°", locale: Locale(identifier: "en"), 180*B/Double.pi))   b: \(String(format: "%.9f", locale: Locale(identifier: "en"), b))   dist: \(String(format: "%12.3f", locale: Locale(identifier: "en"), b_dist))
           C: \(String(format: "%.9f°", locale: Locale(identifier: "en"), 180*C/Double.pi))   c: \(String(format: "%.9f", locale: Locale(identifier: "en"), c))   dist: \(String(format: "%12.3f", locale: Locale(identifier: "en"), c_dist))
-          """)
+          """
   }
 }
 
